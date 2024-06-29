@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradino</title>
+    <link rel="stylesheet" href="App.css">
+    <style>
+        body{
+            text-align: center;
+        }
+        h1{
+            margin-top: 100px;
+            font-size: 80px;
+            font-style: calc(0,80,4);
+            right: auto;
+            white-space: nowrap;
+        }
+        #navigator{
+            background-color: #fbf6f7;
+            top: 13%;
+            width:200px ;
+            height: 400px;
+            text-align: center; 
+            justify-content: space-between;     
+            position: fixed;
+            bottom: 50px;
+            left: 79%;
+            display: none;
+            flex-direction: column;
+            z-index: 10000;
+        }
+
+        #show-nav{
+            position: absolute;
+            left: 800px;
+            background-color: transparent;
+            width: 100px;
+            font-size: 50px;
+            border: 0px;
+        }
+        #show-nav:hover{
+            opacity: 0.7;
+            cursor: pointer;
+        }
+        #close{
+            position: absolute;
+            left: 160px;
+            background-color: transparent;
+            width: 50px;
+            font-size: 30px;
+            border: 0px;
+        }
+        #close:hover{
+            opacity: 0.7;
+            cursor: pointer;
+            color: red;
+        }
+        #routes{
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 40px;
+            font-size: 20px;
+            flex-wrap: wrap;
+            left: 27px;
+        }
+        a{
+            text-decoration: solid;
+        }
+      
+        .gradient-box{
+            width: 200px;
+            height: 250px;
+            border-radius: 50%;
+            background-image : linear-gradient(to left, #d0e48f,#a23b4e,#65880d,#94ef76,#cad985,#dcc502,#343e28,#81a6ac,#c02d80,#1b8de2,#70bb20,#b2dfcb,#62935e,#68ef0d,#4398d6,#4a1a76,#fa0b72,#8c4397,#ff0000,#d233c9,#980cb1,#be9e09,#44a47e,#964b8c,#d22ae9,#f9a398,#ffc400,#251382,#8ed3a1,#a71d65);
+            position: fixed;
+            bottom: 40px;
+            left:  38%;
+        }
+   @media ( max-width: 540px) {
+
+   }
+    </style>
+</head>
+<body id="body">
+    <header>
+       <h2>Grad-ino</h2>
+        <button id="show-nav">...</button>
+    </header>
+    <nav id="navigator" class="show">
+        <button id="close" >x</button>
+        <nav id="routes">
+       <br> <span><a href="#" onclick="route('gradients')">Gradients</a></span> 
+       <br> <span><a href="#" onclick="route('ColorScan')">Generate Colors from images</a></span>
+        <br><span><a href="#" onclick="route('colorgenerator')">Palette Generator</a></span>
+         <br><span><a href="#" onclick="route('CCC')">COLOR Code converter</a></span>
+    </nav>
+    </nav>        
+    <div>
+        <h1 id="color-box">Grad-ino</h1>
+    </div>
+    <div id="gradient-box" class="gradient-box"></div>
+    <div id="color-box"></div>
+    <script src="routes.js">
+        
+    </script>
+    <script>
+          const gradientBox = document.getElementById("gradient-box");
+          const colorBox = document.getElementById("color-box");
+           gradientBox.addEventListener("mousemove",(event)=>{
+            const x = event.clientX;
+            const y =event.clientY;
+            const rect = gradientBox.getBoundingClientRect();
+            const  xicolor = getGradientColor(x,y,rect);
+            colorBox.style.color = xicolor;
+            console.log(xicolor);
+           });
+           function getGradientColor(x,y,rect){
+            const width= rect.width;
+            const height = rect.height;
+            const gradients = [
+    {color:"#d0e48f",x: 0 , width: 0.2},
+    {color:"#a23b4e",x: 0.033 , width: 0.2},
+    {color:"#65880d",x: 0.0667 , width: 0.2},
+    {color:"#94ef76",x: 0.1 , width: 0.2},
+    {color:"#cad985",x: 0.1333 , width: 0.2,},
+    {color:"#dcc502",x: 0.1667 , width: 0.2,},
+    {color:"#343e28",x: 0.2 , width: 0.2,},{color:"#81a6ac",x: 0.2333 , width: 0.2,},{color:"#c02d80",x: 0.2667 , width: 0.2,},{color:"#1b8de2",x: 0.3 , width: 0.2,},{color:"#70bb20",x: 0.3333 , width: 0.2,},{color:"#b2dfcb",x: 0.3667 , width: 0.2,},{color:"#62935e",x: 0.4 , width: 0.2,},{color:"#68ef0d",x: 0.4333 , width: 0.2,},{color:"#4398d6",x: 0.4667 , width: 0.2,},{color:"#4a1a76",x: 0.5 , width: 0.2,},{color:"#fa0b72",x: 0.5333 , width: 0.2,},{color:"#8c4397",x: 0.5667 , width: 0.2,},{color:"#ffff00",x: 0.6 , width: 0.2,},{color:"#d233c9",x: 0.6333 , width: 0.2,},{color:"#980cb1",x: 0.6667 , width: 0.2,},{color:"#be9e09",x: 0.700 , width: 0.2,},{color:"#44a47e",x: 0.733 , width: 0.2,},{color:"#964b8c",x: 0.7667 , width: 0.2,},{color:"#d22ae9",x: 0.80 , width: 0.2,},{color:"#f9a398",x: 0.833 , width: 0.2,},{color:"#ffc400",x: 0.8667 , width: 0.2,},{color:"#251382",x: 0.9 , width: 0.2,},{color:"#8ed3a1",x: 0.933 , width: 0.2,},{color:"#a71d65",x: 0.9667 , width: 0.2,}  
+        ];
+        const colorxx =gradients.find((gradient)=>{
+        const colorX = (x - rect.left)/width;
+           return colorX >=gradient.x && colorX < gradient.x+ gradient.width;
+        
+        });
+         return colorxx.color;
+           }
+    </script>
+</body>
+</html>

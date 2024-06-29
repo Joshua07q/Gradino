@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradients</title>
+    <style>
+        body{
+            align-items: center;
+            margin: 0;
+            padding: 20px;   
+        }
+        #container1{
+            display: flex;
+            flex-direction: row;
+        }
+        #container2{
+            display: flex;
+            flex-direction: row;
+        }
+        .picker-container{
+            display: flex;
+            margin-bottom: 10px;
+        }
+        .picker-container label{
+            margin-right: 10px;
+        }
+        .color-preview{
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-top: 10px ;
+        }
+        #gradient{
+            width: 400px;
+            height: 400px;
+            margin-top: 10px;
+            position: absolute;
+            left: 550px;
+            bottom: 180px;
+            border-radius: 49%;
+        }
+        input{
+            width: 100px;
+        }
+        button{
+            width: 200px;
+            height: 40px;
+            background-color: darkslategray;
+             border-radius: 30px;
+            position: relative;
+             left: 160px;
+              top: 20px;
+              color: white;
+              font-size: xx-large;
+              border: 1px solid transparent;
+        }
+        #gdd{
+            font-size: xx-large;
+            margin-top: 100px;
+            font-weight: bolder;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gradient Generator</h1>
+    <div id="container1">
+    <div class="picker-container">
+        <label for="color1"><b>Color1</b></label>
+         <input type="color" name="color1" id="color1" value="#ffffff">
+         <div id="preview1" class="color-preview"></div>
+    </div>
+    <div class="picker-container">
+        <label for="color2"><b>Color2</b></label>
+         <input type="color" name="color2" id="color2"  value="#ffffff">
+         <div id="preview2" class="color-preview"></div>
+    </div>
+    </div>
+    <div id="container2">
+    <div class="picker-container">
+        <label for="color3"><b>Color3</b></label>
+         <input type="color" name="color3" id="color3"  value="#ffffff">
+         <div id="preview3" class="color-preview"></div>
+    </div>
+    <div class="picker-container">
+        <label for="color4"><b>Color4</b></label>
+         <input type="color" name="color4" id="color4"  value="#ffffff">
+         <div id="preview4" class="color-preview"></div>
+    </div>
+    </div>
+    <canvas id="gradient">Quanck</canvas>
+    <div>
+        <button id="directionChange" >Change Gradient Direction</button>
+    </div>
+    <div id="gdd"></div>
+    <script>
+        const color1 = document.getElementById('color1');
+        const color2 = document.getElementById('color2');
+        const color3 = document.getElementById('color3');
+        const color4 = document.getElementById('color4');
+        const preview1 = document.getElementById('preview1');
+        const preview2 = document.getElementById('preview2');
+        const preview3 = document.getElementById('preview3');
+        const preview4 = document.getElementById('preview4');
+        const gradientView = document.getElementById('gradient');
+        const directionChange = document.getElementById("directionChange");
+        let gradientDirection = "to right";
+        function updateColorPreview(colorInput, previewElement){
+            previewElement.style.backgroundColor =colorInput.value;
+        }
+        function updateGradient (){
+            const gradient =
+             `linear-gradient(${gradientDirection},${color1.value},${color2.value}, ${color3.value},${color4.value})`;
+             gradientView.style.background = gradient;
+             console.log(gradient);
+           const gtD =  document.getElementById("gdd");
+             gtD.textContent = gradient;
+        }
+        color1.addEventListener("input",()=>{
+            updateColorPreview(color1,preview1);
+            updateGradient();
+        });
+        color2.addEventListener("input",()=>{
+            updateColorPreview(color2,preview2);
+            updateGradient();
+        });
+        color3.addEventListener("input",()=>{
+            updateColorPreview(color3,preview3);
+            updateGradient();
+        });
+      color4.addEventListener("input",()=>{
+        updateColorPreview(color4, preview4);
+        updateGradient();
+      })
+      directionChange.addEventListener("click",()=>{
+        gradientDirection = gradientDirection === "to right"? "to left": "to right";
+        updateGradient();
+      })
+        updateColorPreview(color1,preview1);
+        updateColorPreview(color2,preview2);
+        updateColorPreview(color3,preview3);
+        updateColorPreview(color4,preview4);
+        updateGradient();
+        
+    </script>
+    
+</body>
+</html>

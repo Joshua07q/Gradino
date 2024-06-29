@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grad-ino</title>
+    <style>
+      
+      h1{
+        font-size: 60px;
+      }
+        h2{
+            color: black;
+            font-size: xx-large;
+            font-style: italic;
+        }
+        input{
+            width: 200px;
+            height: 30px;
+            margin-bottom: 50px;
+             background-color: rgb(196, 196, 196);
+             font-size: 16px;
+            font-weight: bold;
+        }
+        input:focus{
+            opacity: 0.5;
+            color: #000;
+            background-color: #fff;
+        }
+        .palette-generator{
+            padding: 20px;
+            border: 0.5px solid #dddddd;
+        }
+        #save-load-buttons{
+             position: absolute;
+             bottom: 150px;
+
+        }
+        #palette-container{
+          position: relative;
+            left: 0%;
+            max-width: 500px;
+            background-color: #fff;
+            padding: 20px;
+            border: 0.5px solid black;
+            margin-top: 10px;
+            top: 0px;
+        }
+        #palette-colors{
+         display: flex;
+         flex-wrap: wrap;
+        }
+        .palette-color{
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 1px solid #ccc;
+            display: inline-block;
+            margin: 5px;
+            cursor: pointer;
+        }
+      
+        .color-code{
+            font-size: medium;
+            font-weight: bold;
+            margin-left: 5px;
+           position: relative;
+           top: 30px;
+           
+        }
+        .color-code:hover{
+            opacity: 0.9;
+        }
+        button{
+            width: 100px;
+            height: 50px;
+            border-radius: 30px;
+            font-size: large;
+            color: black;
+        }
+        button:hover{
+            opacity: 0.8;
+        }
+        #save-palette{
+            background-color: rgb(202, 26, 64);
+            width: 100px;
+            height: 50px;
+            border-radius: 30px;
+            font-size: xx-large;
+            color: #ddd;
+            text-align: center;
+            display: inline-block;
+        }
+        #load-palette{
+            background-color: darkslategrey;
+            width: 100px;
+            height: 50px;
+            border-radius: 30px;
+            font-size: xx-large;
+            color: #ddd;
+            text-align: center;
+            display: inline-block;
+            margin-left: 10px;
+            display: none;
+        }
+        #load-palette:hover{
+              opacity: 0.8;
+        }
+        #save-palette:hover{
+            opacity: 0.8;
+        }
+        #json-btn{
+          position: relative;
+          background-color: rgb(236, 236, 4);
+            width: 100px;
+            height: 100px;
+            font-size: xx-large;
+            color: #ddd;
+            text-align: center;
+            display: inline-block;
+            margin-left: 10px;
+        } 
+        #json{
+          position: absolute;
+          top: 32px;
+          right: 5px;
+          font-size: 30px;
+        }  
+        #json-btn:hover{
+             opacity: 0.7;
+        }
+        
+        #save-load-buttons{
+          position: relative;
+          align-items: center;
+          display: flex;
+          flex-wrap: wrap;
+          top: 0px;
+            }
+      #lg-buttons{
+          margin-top: 5px;
+          align-items: center;
+          display: flex;
+          flex-wrap: wrap;
+
+            }
+            #lg-buttons{
+          margin-top: 5px;
+          align-items: center;
+          display: flex;
+          flex-wrap: wrap;
+
+            }
+     .download{
+        background-color: greenyellow;
+        width: 100px;
+        height: 50px;
+        border-radius: 30px;
+        color: black;
+        margin-left: 5px;
+     }
+       #pop-up{
+        background-color: #e3e3e3;
+        box-shadow: 1px 1px 3px #ddd;
+        display: none;
+        text-align: center;        
+        width: 500px;
+        max-height: 500px;
+        max-width: 700px;
+        position: fixed;
+        bottom: 20%;
+        left: 270px;
+        overflow-y: scroll;
+        overflow-x: scroll; 
+        z-index: 100;  
+       } 
+       #h2{
+        color: black;
+       }
+       label{
+        font-size: 30px;
+        font-style: italic;
+       }
+       dt{
+          font: 3em large italic;
+        color: rgb(184, 182, 182);
+        font-weight: bold;
+       }
+       #alert{
+        width: 250px;
+        position: fixed;
+        transform: translate(-50%, -50%);
+        top: 70%;
+        left: 50%;
+        background-color: #ddd;
+        border: 0.5px solid #c5c5c5;
+        padding: 10px;
+        z-index: 1000;
+        display: none;
+        opacity: 1;
+        transition: 0.5s;
+       }
+       #alert.show{
+        display: block;
+       }
+       #alert.fade-out{
+        opacity: 0;
+       }
+       img{
+        margin-bottom: 20px;
+       }
+       #pop-up-buttons{
+        position:absolute;
+        width: 300px;
+        height: 60px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: center;
+       }
+       #download-btn{
+         display: inline;
+         position: relative;
+           right: 0px;
+           top: 5px;
+          background-color: rgb(187, 255, 85);
+       }
+       #close-popup{
+        position: absolute;
+        bottom: 130px;
+        width: 70px;
+        border-radius: 0%;
+        left: 400px;
+       }
+    </style>
+</head>
+<body style="background-color: #fffdfd;">
+    <h1>Palette & Gradient Generator</h1>
+    <div class="palette-generator">
+      <dl>
+        <dt>Generate Random Palettes</dt>
+        <dd style="color: darkred; font-size: 25px;">With Over 16 million colors to choose from</dd>
+        <dt>Copy colors to your code</dt>
+        <dd style="color: darkred; font-size: 25px;">Create and save beautiful Gradients</dd>
+        <dt>Save your Palettes</dt>
+
+      </dl>
+        <div>
+          <div>
+        <label for="palette-name">Palette Name</label>
+           <input type="text" id="palette-name" placeholder="Random Palette" >
+           <label for="num-colors">Number of Colors</label>
+        <input type="number" name="number" value="5" id="num-colors">
+        <button id="generate" style="top: 65px; right: 685px; position: relative;">Generate Palette</button>
+        <button id="new" style="bottom: 18px; position: relative;">Delete Palette</button>
+      </div>
+        <div id="save-load-buttons">
+          <div id="save-palette" ><img src="
+            heart2.jpeg" alt="quanck" width="40px" height="50px"></div>
+          <div id="load-palette">Load</div>
+               <div id="json-btn"><h2 id="json">JSON</h2></div>
+          </div>
+         <div id="palette-container">
+            <h2 id="palette-name-display"></h2>
+            <div id="palette-colors">  
+                </div>         
+        </div>
+        <div id="pop-up">
+          <h1 style="text-decoration: underline;font-size: 50px;">Saved Palettes</h1>
+          <div id="pop-up-buttons" >
+            <button id="download-btn"></button>
+            <button id="close-popup" >Close</button>
+            </div>
+           <h2 id="h2"></h2>
+           <div id="palette-list">
+           </div>
+        </div>
+    </div>
+    <div>
+         <div id="alert">
+              <span id="alert-message">Message:</span>
+                </div>
+            <h2>Linear Gradient</h2>
+            <div id="lg-buttons">
+                <button id="generate-linear-gradient">Linear Gradient</button>
+                <button name="download-btn" class="download" id="download-lg">Export as css#</button>
+             </div>
+             <br>
+         <canvas id="gradient-canvas" width="800" height="100"></canvas>
+             <div>  
+               <h2>Radial Gradient</h2>
+                 <div id="rg-buttons">
+                    <button id="generate-radial-gradient">Radial Gradient</button>
+                    <button name="download-btn" class="download" id="download-rg">Export as css#</button>
+                    </div>
+                    <br>
+         <canvas id="gradient-canvas2" width="400" height="400"></canvas>
+             </div>
+             </div>
+        </div>
+        </div>
+    <script>
+
+    /* Getting a random color and palette */
+        let palette = [];
+      function getRandomColor (){
+        return `#${Math.floor(Math.random()*16777215).toString(16)}`;
+      }
+      function getRandomPalette(name, numColors){
+        const paletteName = document.getElementById('palette-name').value; 
+            if(paletteName !== ""){
+        for(i = 0; i<numColors; i++){
+           let color;
+           do{
+            color = getRandomColor();
+           }while(typeof color !== "string" || ! color.startsWith("#")|| color.length !== 7);
+           palette.push(color);
+        }
+        return {name, palette, something:false};
+      }else{
+        showAlertMessage("Enter valid Palette Name!!!");
+        return null;
+      }
+      }
+        function showAlertMessage(message){
+        const alertBox = document.getElementById("alert");
+        const alertMessage = document.getElementById("alert-message");
+        alertMessage.innerText = message;
+        alertBox.classList.add("show");
+        setTimeout(()=>{
+           alertBox.classList.add("fade-out");
+         },800);
+         setTimeout(()=>{
+           alertBox.classList.remove("show","fade-out");
+         },1200);
+        }
+      /* To display the palettes */
+
+      function displayPalette (palette){   
+      const paletteName = document.getElementById('palette-name').value; 
+      const displayName = document.getElementById("palette-name-display");
+      displayName.textContent = paletteName;
+        const paletteColors = document.getElementById("palette-colors");
+        paletteColors.innerHTML = '';
+        const colorDivs = palette.palette.map((color)=>{
+            const div = document.createElement("div");
+            div.className = "palette-color";
+            div.style.backgroundColor =color;
+            const span = document.createElement("span");
+            div.addEventListener("click",()=>{
+                navigator.clipboard.writeText(color);
+                showAlertMessage(`Color ${color} copied!`);
+            });
+            span.className = 'color-code';
+            span.textContent = color;
+               div.appendChild(span);
+            
+                return div;
+        });
+          
+        paletteColors.append(...colorDivs);
+        document.getElementById('palette-container').style.display ="block";
+     
+      }
+       
+      /* Save and Loading the saved Palettes */
+      function savePalette(palette){
+        const savedPalette = JSON.parse(localStorage.getItem("palette"))|| [];
+        savedPalette.push(palette);
+        localStorage.setItem("palette", JSON.stringify(savedPalette));
+        console.log(savedPalette);
+      }
+        const savedPalettes = document.getElementById("pop-up");
+        const paletteList = document.getElementById("palette-list");
+         
+      function loadPalette(){
+        const paletteData = localStorage.getItem("palette");
+           paletteList.innerHTML = "";
+           if(paletteData){
+            palette.forEach((color)=>{ 
+            const div = document.createElement("div");
+            div.className = "palette-color";
+            div.style.backgroundColor =color;
+            const span = document.createElement("span");
+            div.addEventListener("click",()=>{
+                navigator.clipboard.writeText(color);
+             showAlertMessage(`Color ${color} copied!`);
+            });
+            span.className = 'color-code';
+            span.textContent = color;
+               div.appendChild(span);
+            paletteList.append(div);
+          });
+        }
+          const downloadBtn = document.getElementById("download-btn");
+            downloadBtn.className = "download-btn";
+            downloadBtn.textContent = "Download Palette";
+            downloadBtn.addEventListener("click",()=>{
+             const paletteName = document.getElementById('palette-name').value;
+                let css = `/*${paletteName}Palette CSS*/\n`;
+              palette.forEach((color)=>{
+                    css += `${color}{
+                        background-color: ${color};
+                        color: ${color};
+                    }\n`
+                });
+                const blob = new Blob([css], {type:"text/css"});
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = `${paletteName}.css`;
+                link.click();
+             
+            });
+          const paletteName = document.getElementById('palette-name').value; 
+            const paletteDisplayName = document.getElementById("h2");
+            paletteDisplayName.textContent = paletteName; 
+          
+            savedPalettes.appendChild(paletteDisplayName);
+                savedPalettes.appendChild(downloadBtn);
+             savedPalettes.appendChild(paletteList);
+        
+              savedPalettes.style.display = "block";
+              const popupClose = document.getElementById("close-popup");  
+
+             }
+
+        document.getElementById("close-popup").addEventListener("click",()=>{
+                    savedPalettes.style.display = "none"
+        });
+
+      document.getElementById('generate').addEventListener("click", ()=>{
+        const paletteName = document.getElementById('palette-name').value;
+        const numColors = document.getElementById("num-colors").value;
+        const palettes = getRandomPalette(paletteName, numColors);
+        if(palette.length === 0){
+          displayPalette(palettes);
+        }else{
+         palette.length === 0;
+         displayPalette(palettes);
+        }
+
+      });
+      document.getElementById('new').addEventListener('click',()=>{
+        palette.length = 0;
+        const paletteColors = document.getElementById("palette-colors");
+        paletteColors.innerHTML = '';
+      });
+      
+
+      document.getElementById("save-palette").addEventListener("click",()=>{
+            if(palette.length !== 0){
+        const paletteName = document.getElementById('palette-name').value;
+        const numColors = document.getElementById("num-colors").value;
+        savePalette(palette);
+        document.getElementById("load-palette").style.display = 'block';
+            }else{
+              showAlertMessage("Generate a palette!");
+            }
+      });
+
+      document.getElementById("load-palette").addEventListener('click',()=>{
+                     loadPalette();
+      });
+     const jsonBtn = document.getElementById("json-btn");
+     jsonBtn.addEventListener("click",()=>{
+        const paletteName = document.getElementById('palette-name').value;
+        const json = JSON.stringify(palette);
+        const jsonFile = new Blob([json],{type:"application/json"});
+        const url = URL.createObjectURL(jsonFile);
+        const link = document.createElement("a");
+        if(palette.length === 0){
+           showAlertMessage("Error parsing to json");
+            jsonBtn.disabled = true;
+        }else{
+        link.href = url;
+        link.download = `${paletteName}.json`;
+        link.click();
+        }
+
+      })
+      /* Gradient Maker*/
+      const colorMixer = document.getElementById("generate-linear-gradient");
+      colorMixer.addEventListener("click",()=>{
+        const palette = getRandomPalette();
+        const canvas = document.getElementById('gradient-canvas');
+        const ctx = canvas.getContext("2d");
+        const gradient = ctx.createLinearGradient(0,0, canvas.width, canvas.height);
+        palette.palette.forEach((color, index)=>{
+            gradient.addColorStop(index/(palette.palette.length -1), color);
+        });
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0,0, canvas.width,canvas.height);
+      });
+      const radialColorMixer = document.getElementById("generate-radial-gradient");
+         radialColorMixer.addEventListener("click",()=>{
+        const palette = getRandomPalette();
+        const canvas = document.getElementById('gradient-canvas2');
+        const ctx = canvas.getContext("2d");
+        const gradient = ctx.createRadialGradient(canvas.width/2, canvas.height/2, 0, canvas.width/2, canvas.height/2, canvas.width);
+        palette.palette.forEach((color, index)=>{
+            gradient.addColorStop(index/(palette.palette.length -1), color);
+        });
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0,0, canvas.width,canvas.height);
+      });
+
+         /* Downloading the Gradients as CSS */  
+       const lg =  document.getElementById("download-lg");
+            lg.addEventListener("click",()=>{
+        const paletteName = document.getElementById('palette-name').value;
+        const css = `/*Linear Gradient*/
+      .linear-gradient{
+        background-image : linear-gradient(to right, ${palette.join(',')});
+        background-size: 100% 2px;
+        background-position: 0% 100%;
+        height: 2px;
+      }`;
+      const cssFile = new Blob([css],{type:"text/css"});
+      const url = URL.createObjectURL(cssFile);
+      const link = document.createElement("a");
+      if(palette.length ===0){
+        lg.disabled == true;
+        showAlertMessage("This Gradient does not exist");
+        link.href = "#";
+        link.download =null;
+      }else{
+        link.href =url;
+        link.download = `${paletteName}/linear-gradient.css`;
+        link.click();
+      }
+    }
+    )
+       const rg = document.getElementById("download-rg");
+    rg.addEventListener("click",()=>{
+    const paletteName = document.getElementById('palette-name').value;
+      const css = `/*Radial Gradient*/
+      .radial-gradient{
+        background-image : linear-gradient(at center, ${palette.join(',')});
+        background-size: 100% 100%;
+        height: 100vh;
+        width: 100vh;
+      }`;
+      const cssFile = new Blob([css],{type:"text/css"});
+      const url = URL.createObjectURL(cssFile);
+      const link = document.createElement("a");
+      if(palette.length === 0){
+        rg.disabled == true;
+        showAlertMessage("This Gradient does not exist");
+        link.href ="#";
+      }else{
+       link.href = url;
+       link.download =`${paletteName}/radial-gradient.css`;
+      link.click();
+      }
+    }
+    );
+    </script>
+</body>
+</html>

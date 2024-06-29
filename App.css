@@ -1,0 +1,108 @@
+body{
+  position: relative;
+ background-color: transparent;
+}
+header{
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #bfc2a7;
+  color: #0f0f2c;
+  height: 50px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+#select{
+  position: fixed;
+  left: 850px;
+}
+
+#file-picker{
+  position: absolute;
+  top: 200px;
+}
+ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 0px;
+}
+li{
+  position: relative;
+}
+.dd-menu{
+  display: none;
+}
+#select:hover + .menu,
+#select:active + .menu{
+  display: block;
+}
+.dd-menu li{
+  width: 100%;
+}
+.dd-menu li a{
+  display: block;
+}
+a{
+  color: black;
+}
+a:hover{
+  color: rgb(86, 105, 167);
+}
+#canvas{
+    position: absolute;
+    left: 400px;
+    top: 0px;
+    border: 1px solid black;
+}
+#image-gradient{
+  position: absolute;
+  left: 700px;
+  top: 0px;
+  border: 1px solid black;
+}
+.newdiv{
+
+   width: 70px;
+   height: 70px;
+   border-radius: 50px;
+   text-align: center;
+   color: white;
+}
+.newdiv:hover{
+  border: 0.2px thin black;
+  opacity: 0.9;
+}
+.palette-container{
+  top: 0px;
+  background: scroll;
+  border: 0.5px solid rgb(12, 12, 12);
+  position: absolute;
+   column-count: auto;
+   column-gap: normal;
+  overflow-y: scroll;
+  max-height: 700px;
+  width: 120px;
+  align-items: normal ;
+  background-color: darkslategray;
+  
+}
+#fileInput{
+  position: relative;
+   left: 350px;
+   top: 320px;
+   font-size: large;
+   font-style: italic;
+}
+#fine{
+  font-size: 60px;
+  position: absolute;
+  top: 0%;
+  font-style:normal;
+  left: 150px;
+}
