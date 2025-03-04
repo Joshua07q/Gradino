@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Generator</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 90%;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+h2 {
+    font-weight: 600;
+    color: #2f4f4f;
+}
+
+.color-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+    max-height: 320px;
+    overflow-y: auto;
+    padding: 15px;
+    border-radius: 10px;
+    background: #f1f1f1;
+}
+
+.color {
+    width: 75px;
+    height: 75px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.color:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+button {
+    background-color: #2f4f4f;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    font-weight: 500;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #1e3636;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+select, input {
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    width: 100%;
+    max-width: 280px;
+    margin: auto;
+}
+
+.gradient-preview {
+    margin-top: 20px;
+    width: 100%;
+    height: 120px;
+    border-radius: 8px;
+    background: #ddd;
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-alert {
+    display: none;
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    min-width: 280px;
+    max-width: 80%;
+}
+
+.custom-alert button {
+    margin-top: 12px;
+    background: crimson;
+}
+
+@media (max-width: 600px) {
+    .container {
+        width: 95%;
+        padding: 18px;
+    }
+    .color {
+        width: 60px;
+        height: 60px;
+    }
+    button {
+        font-size: 14px;
+        padding: 12px;
+    }
+    select, input {
+        font-size: 14px;
+        padding: 10px;
+    }
+    .custom-alert {
+        min-width: 250px;
+        padding: 18px;
+    }
+}
+  /* Navigation Bar */
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            background-color: #2f4f4f;
+            padding: 10px 20px;
+            color: white;
+            z-index: 1000;
+        }
+
+        /* Back Button (Icon-Only) */
+        .back-button {
+            font-size: 24px;
+            text-decoration: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            display: inline;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Mobile View */
+        @media (max-width: 600px) {
+            .nav-bar {
+                flex-direction: row;
+                padding: 10px;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .back-button {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav-bar">
+          <h1>Gradino</h1>
+            <a href="App.html" class="back-button" title="Back to Dashboard">⬅</a>
+            
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Color Generator</h2>
+        <label for="paletteName">Palette Name:</label>
+        <input type="text" id="paletteName" placeholder="Enter palette name">
+        
+        <label for="colorCount">Number of Colors:</label>
+        <input type="number" id="colorCount" min="1" value="5">
+        
+        <button onclick="generateColors()">Generate Colors</button>
+        <button onclick="savePalette()">Save Palette</button>
+
+        <label>Load Palette:</label>
+        <select id="paletteList">
+            <option value="">Select a Palette</option>
+        </select>
+        <button onclick="loadPalette()">Load Palette</button>
+
+        <div class="color-box" id="colorBox"></div>
+
+        <div class="controls">
+            <label>Gradient Type:</label>
+            <select id="gradientType">
+                <option value="linear">Linear</option>
+                <option value="radial">Radial</option>
+            </select>
+            <button onclick="showGradient()">View Gradient</button>
+            <div class="gradient-preview" id="gradientPreview"></div>
+
+            <label>Download as:</label>
+            <select id="downloadType">
+                <option value="json">JSON</option>
+                <option value="css">CSS</option>
+                <option value="gradient">Gradient</option>
+            </select>
+            <button onclick="downloadColors()">Download</button>
+        </div>
+    </div>
+
+    <div class="custom-alert" id="customAlert">
+        <p id="alertMessage"></p>
+        <button onclick="closeAlert()">Close</button>
+    </div>
+
+    <script>
+        let colorsArray = [];
+        let savedPalettes = {};
+
+        function generateColors() {
+            let paletteName = document.getElementById("paletteName").value.trim();
+            let colorCount = parseInt(document.getElementById("colorCount").value);
+            
+            if (!paletteName) {
+                showAlert("Enter a palette name first!");
+                return;
+            }
+
+            if (colorCount < 1) {
+                showAlert("Enter a valid number of colors!");
+                return;
+            }
+
+            colorsArray = Array.from({ length: colorCount }, () => {
+                return "#" + Math.floor(Math.random() * 16777215).toString(16).padStart(6, "0");
+            });
+
+            displayColors();
+        }
+
+        function displayColors() {
+            let colorBox = document.getElementById("colorBox");
+            colorBox.innerHTML = "";
+
+            colorsArray.forEach(color => {
+                let div = document.createElement("div");
+                div.className = "color";
+                div.style.backgroundColor = color;
+                div.onclick = () => showColorInfo(color);
+                colorBox.appendChild(div);
+            });
+        }
+
+        function showColorInfo(color) {
+            showAlert(`Color: ${color} <br><button onclick="copyColor('${color}')">Copy Color</button>`);
+        }
+
+        function copyColor(color) {
+            navigator.clipboard.writeText(color).then(() => {
+                showAlert("Color copied!");
+            }).catch(() => {
+                showAlert("Failed to copy!");
+            });
+        }
+
+        function savePalette() {
+            let paletteName = document.getElementById("paletteName").value.trim();
+            if (!paletteName) {
+                showAlert("Enter a palette name before saving!");
+                return;
+            }
+
+            savedPalettes[paletteName] = [...colorsArray];
+            updatePaletteList();
+            showAlert("Palette saved successfully!");
+        }
+
+        function updatePaletteList() {
+            let paletteList = document.getElementById("paletteList");
+            paletteList.innerHTML = '<option value="">Select a Palette</option>';
+            Object.keys(savedPalettes).forEach(name => {
+                let option = document.createElement("option");
+                option.value = name;
+                option.textContent = name;
+                paletteList.appendChild(option);
+            });
+        }
+
+        function loadPalette() {
+            let selectedPalette = document.getElementById("paletteList").value;
+            if (!selectedPalette || !savedPalettes[selectedPalette]) {
+                showAlert("Select a valid palette!");
+                return;
+            }
+
+            colorsArray = savedPalettes[selectedPalette];
+            displayColors();
+            showAlert("Palette loaded!");
+        }
+
+        function showGradient() {
+            let gradientType = document.getElementById("gradientType").value;
+            let gradientPreview = document.getElementById("gradientPreview");
+
+            let gradient = gradientType === "linear"
+                ? `linear-gradient(to right, ${colorsArray.join(", ")})`
+                : `radial-gradient(circle, ${colorsArray.join(", ")})`;
+
+            gradientPreview.style.background = gradient;
+        }
+
+
+    function downloadColors() {
+        let type = document.getElementById("downloadType").value;
+        let paletteName = document.getElementById("paletteName").value.trim() || "palette";
+
+        if (colorsArray.length === 0) {
+            showAlert("Generate colors first!");
+            return;
+        }
+
+        let data = "";
+        let mimeType = "text/plain";
+        let filename = `${paletteName}.${type}`;
+
+        switch (type) {
+            case "json":
+                data = JSON.stringify(colorsArray, null, 2);
+                mimeType = "application/json";
+                filename = `${paletteName}.json`;
+                break;
+            case "css":
+                data = `/* CSS Variables for ${paletteName} */\n` +
+                       `:root {\n` +
+                       colorsArray.map((color, index) => `  --color-${index + 1}: ${color};`).join("\n") +
+                       `\n}`;
+                mimeType = "text/css";
+                filename = `${paletteName}.css`;
+                break;
+            case "gradient":
+                let gradientType = document.getElementById("gradientType").value;
+                let gradientStyle = gradientType === "linear"
+                    ? `background: linear-gradient(to right, ${colorsArray.join(", ")});`
+                    : `background: radial-gradient(circle, ${colorsArray.join(", ")});`;
+                
+                data = `/* CSS Gradient for ${paletteName} */\n${gradientStyle}`;
+                mimeType = "text/css";
+                filename = `${paletteName}-gradient.css`;
+                break;
+        }
+
+        let blob = new Blob([data], { type: mimeType });
+        let a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.click();
+    }
+
+        function showAlert(message) {
+            document.getElementById("alertMessage").innerHTML = message;
+            document.getElementById("customAlert").style.display = "block";
+        }
+
+        function closeAlert() {
+            document.getElementById("customAlert").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
