@@ -74,7 +74,7 @@
             border-radius: 5px;
         }
 
-        /* Navigation Bar */
+        
         .nav-bar {
             position: fixed;
             top: 0;
@@ -87,8 +87,7 @@
             color: white;
             z-index: 1000;
         }
-
-        /* Back Button (Icon-Only) */
+ 
         .back-button {
             font-size: 24px;
             text-decoration: none;
@@ -101,7 +100,7 @@
             background-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* Navigation Links */
+        
         .nav-links {
             list-style: none;
             display: flex;
@@ -252,9 +251,7 @@ function rgbToHsl(rgb) {
         h /= 6;
     }
     return `hsl(${Math.round(h * 360)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
-}
-
-// HSL to RGB
+        }
 // HSL to RGB
 function hslToRgb(hsl) {
     let [h, s, l] = hsl.match(/\d+/g).map(Number);
