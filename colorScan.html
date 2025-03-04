@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Color Scan</title>
     <style>
-        /* General Reset */
+        
         * {
             margin: 0;
             padding: 0;
@@ -28,7 +28,7 @@
             margin-bottom: 15px;
         }
 
-        /* File Picker */
+        
         .file-upload {
             background: #007bff;
             color: #fff;
@@ -63,7 +63,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        /* Scrollable Color Palette */
+        /*  Color Palette */
         .palette-container {
             margin-top: 20px;
             display: grid;
@@ -134,7 +134,7 @@
             background: #0056b3;
         }
 
-        /* View Gradient Button */
+        /* Gradientview Button */
         .gradient-button {
             margin-top: 20px;
             background: #28a745;
@@ -152,7 +152,7 @@
             background: #218838;
         }
 
-        /* Larger Gradient Preview */
+        /* Gradient Preview */
         .gradient-preview {
             width: 100%;
             max-width: 400px;
@@ -162,7 +162,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: none;
         }
-          /* Navigation Bar */
+          /* Nav Bar */
         .nav-bar {
             position: fixed;
             top: 0;
@@ -176,7 +176,7 @@
             z-index: 1000;
         }
 
-        /* Back Button (Icon-Only) */
+        /* Back Button */
         .back-button {
             font-size: 24px;
             text-decoration: none;
@@ -189,7 +189,7 @@
             background-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* Navigation Links */
+        /* Nav Links */
         .nav-links {
             list-style: none;
             display: flex;
@@ -214,7 +214,7 @@
             background-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* Mobile View */
+        /* responsive design*/
         @media (max-width: 600px) {
             .nav-bar {
                 flex-direction: row;
@@ -253,13 +253,13 @@
 
     <div class="palette-container" id="palette"></div>
 
-    <!-- View Gradient Button -->
+    
     <button class="gradient-button" id="viewGradientBtn" onclick="toggleGradient()">View Gradient</button>
 
     <!-- Gradient Preview -->
     <div class="gradient-preview" id="gradientPreview"></div>
 
-    <!-- Custom Alert Box -->
+    
     <div class="custom-alert" id="colorAlert">
         <div class="alert-message" id="alertMessage"></div>
         <div class="alert-buttons">
